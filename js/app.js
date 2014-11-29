@@ -132,6 +132,7 @@
 	angular.module('config').config(['$stateProvider','$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 	    $urlRouterProvider.otherwise('/');
 	    $stateProvider
+
 	        .state("/",{
 	            url:"/",
 	            template: __webpack_require__(23),
@@ -158,7 +159,6 @@
 	            template: __webpack_require__(33),
 	            controller: "TransactionCtrl"
 	        })
-
 
 	        //ルーム作成 3
 	        .state("/room",{
@@ -340,57 +340,11 @@
 
 	'use strict';
 
-	__webpack_require__(18);
-	__webpack_require__(19);
-
 	angular.module('controllers').controller('LoginCtrl', [
-	    '$scope',
-	    'UserModel',
-	    'AccountModel',
-	    'storage',
 
-	    function ($scope, UserModel, AccountModel, storage) {
-	        //ログイン中かチェック
-	        AccountModel.checkUser(function(err,user){
-	            update($scope, user);
-	        });
-
-	        //+ユーザーログアウト
-	        $scope.logoutUser = function(){
-	            AccountModel.logout();
-	            $scope.setLogin = false;
-	        };
-
-	        //+ユーザーログイン
-	        $scope.loginUser = function(){
-	            var email = $scope.email;
-	            var password = $scope.password;
-	            AccountModel.login(email, password, function(data){
-	                update($scope, data);
-	            });
-	        };
-
-	        //+部屋検索
-	        $scope.findRoom = function(){
-	            var query = jinroDS.query();
-	            //このように取得したオブジェクトを用いてデータの取得を行います。
-	            query.done(function(data){
-	                $scope.$apply(function(){
-	                    $scope.roomList = data;
-	                });
-	            });
-	        };
+	    function () {
 	    }
 	]);
-
-	function update($scope, data){
-	    if(!data) return;
-	    $scope.$apply(function(){
-	        $scope.setLogin = 'on';
-	        $scope.userName = data.option.userName;
-	        $scope.twitter = data.option.twitter;
-	    });
-	}
 
 /***/ },
 /* 7 */
@@ -399,7 +353,7 @@
 	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
 
 	__webpack_require__(18);
-	__webpack_require__(20);
+	__webpack_require__(19);
 
 	angular.module('controllers').controller('MainCtrl',[
 	    '$scope',
@@ -700,7 +654,7 @@
 
 	'use strict';
 
-	__webpack_require__(19);
+	__webpack_require__(20);
 	__webpack_require__(21);
 	__webpack_require__(22);
 
@@ -857,8 +811,8 @@
 	'use strict';
 
 	__webpack_require__(18);
-	__webpack_require__(19);
 	__webpack_require__(20);
+	__webpack_require__(19);
 
 	angular.module('controllers').controller('RoomCtrl', [
 	    '$scope',
@@ -901,8 +855,8 @@
 	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
 
 	__webpack_require__(18);
-	__webpack_require__(19);
 	__webpack_require__(20);
+	__webpack_require__(19);
 
 	angular.module('controllers').controller('StandbyCtrl', [
 	    '$scope',
@@ -1155,6 +1109,69 @@
 
 	'use strict';
 
+	angular.module('services').factory('RoomModel', [
+	    'storage',
+
+	    function (storage) {
+	        return {
+	            //部屋の初期化
+	            init: function(room_name, num){
+	                if(!num){
+	                    alert("人数を選択して下さい。");
+	                    return;
+	                }
+
+	                var config = __webpack_require__(17)(num);
+	                var init_data = __webpack_require__(35)(room_name, config.casting, config.mes);
+	                shuffle(init_data.current); //シャッフル
+	                jinroDS.set(room_name, init_data);
+
+	                console.log("初期化しました",config.mes,room_name,num, init_data);
+
+	                return config.mes;
+	            },
+
+	            //部屋情報を取得
+	            get: function(room_id, cb){
+	                jinroDS.child(room_id).get(function(data){
+	                    cb(data);
+	                });
+	            },
+
+	            set: function(){
+
+	            },
+
+	            getAll: function(){
+	                //jinroDataStore.child({}).get(function(data){
+	                //    return data;
+	                //});
+	            }
+
+	        };
+
+	    }
+	]);
+
+	//配列のシャッフル
+	function shuffle(a){
+	    var n = a.length;
+	    for(var i = n - 1; i > 0; i--) {
+	        var j = Math.floor(Math.random() * (i + 1));
+	        var tmp = a[i];
+	        a[i] = a[j];
+	        a[j] = tmp;
+	    }
+
+	    return a;
+	}
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	angular.module('services').factory('AccountModel', [
 	    'storage',
 
@@ -1231,69 +1248,6 @@
 
 	    }
 	]);
-
-/***/ },
-/* 20 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	angular.module('services').factory('RoomModel', [
-	    'storage',
-
-	    function (storage) {
-	        return {
-	            //部屋の初期化
-	            init: function(room_name, num){
-	                if(!num){
-	                    alert("人数を選択して下さい。");
-	                    return;
-	                }
-
-	                var config = __webpack_require__(17)(num);
-	                var init_data = __webpack_require__(35)(room_name, config.casting, config.mes);
-	                shuffle(init_data.current); //シャッフル
-	                jinroDS.set(room_name, init_data);
-
-	                console.log("初期化しました",config.mes,room_name,num, init_data);
-
-	                return config.mes;
-	            },
-
-	            //部屋情報を取得
-	            get: function(room_id, cb){
-	                jinroDS.child(room_id).get(function(data){
-	                    cb(data);
-	                });
-	            },
-
-	            set: function(){
-
-	            },
-
-	            getAll: function(){
-	                //jinroDataStore.child({}).get(function(data){
-	                //    return data;
-	                //});
-	            }
-
-	        };
-
-	    }
-	]);
-
-	//配列のシャッフル
-	function shuffle(a){
-	    var n = a.length;
-	    for(var i = n - 1; i > 0; i--) {
-	        var j = Math.floor(Math.random() * (i + 1));
-	        var tmp = a[i];
-	        a[i] = a[j];
-	        a[j] = tmp;
-	    }
-
-	    return a;
-	}
 
 /***/ },
 /* 21 */
@@ -1464,7 +1418,7 @@
 /* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<section id=\"login\" class=\"page\" ng-controller=\"RegisterCtrl\">\n    <div class=\"container\">\n        <div class=\"content text-center\">\n            <div class=\"heading\">\n                <span>ご利用頂くには、新規登録をしてください。</span>\n            </div>\n            <div class=\"row\">\n                <div class=\"col-lg-4 service animated hiding\" data-animation=\"fadeInUp\" data-delay=\"300\">\n                    <form class=\"navbar-form\" role=\"search\">\n                        <div class=\"form-group\">\n                            <input type=\"text\" class=\"form-control\" id=\"username\" placeholder=\"ユーザ名\">\n                        </div>\n                        <div class=\"form-group\">\n                            <input type=\"email\" class=\"form-control\" id=\"email\" placeholder=\"メールアドレス\">\n                        </div>\n                        <div class=\"form-group\">\n                            <input type=\"password\" class=\"form-control\" id=\"pass\" placeholder=\"パスワード\">\n                        </div>\n                        <div class=\"form-group\">\n                            <button type=\"submit\" class=\"btn btn-default\">新規登録する</button>\n                        </div>\n                    </form>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>\n\n<!--<div class=\"large-12 columns\" ng-controller=\"RegisterCtrl\">-->\n    <!--<strong>ユーザー登録 (※全て必須項目)</strong>-->\n\n    <!--<label>表示名を入力してください。</label>-->\n    <!--<input type=\"text\" placeholder=\"例:のびすけ\" ng-model=\"user.userName\" required />-->\n    <!--&lt;!&ndash;<label>twitterのIDを入力して下さい。(@以下)</label>&ndash;&gt;-->\n    <!--&lt;!&ndash;<input type=\"text\" placeholder=\"例:n0bisuke\" ng-model=\"twitter\" required />&ndash;&gt;-->\n    <!--<label>メールアドレスを入力して下さい。(確認メールが届きます。)</label>-->\n    <!--<input type=\"text\" placeholder=\"例:hoge@hoge.com\" ng-model=\"user.email\" required />-->\n    <!--<label>パスワードを入力して下さい。</label>-->\n    <!--<input type=\"password\" placeholder=\"例:password\" ng-model=\"user.password\" required />-->\n    <!--<label>確認用でパスワードを再入力して下さい。</label>-->\n    <!--<input type=\"password\" placeholder=\"例:password\" ng-model=\"user.passwordCheck\" required />-->\n\n    <!--<p ng-if=\"(!user.userName||!user.email||!user.password)||user.password!==user.passwordCheck\">-->\n        <!--入力項目が不完全です。-->\n    <!--</p>-->\n    <!--<button ng-click=\"addUser()\" ng-if=\"(user.userName&&user.email&&user.password)&&user.password===user.passwordCheck\">-->\n        <!--新規ユーザー登録-->\n    <!--</button>-->\n\n    <!--<a href=\"#/login\" class=\"tiny secondary button\">ログインへ</a>-->\n<!--</div>-->";
+	module.exports = "<section id=\"login\" class=\"page\" ng-controller=\"RegisterCtrl\">\n    <div class=\"container\">\n        <div class=\"content text-center\">\n            <div class=\"heading\">\n                <span>ご利用頂くには、新規登録をしてください。ssdfsd</span>\n            </div>\n            <div class=\"row\">\n                <div class=\"col-lg-4 service animated hiding\" data-animation=\"fadeInUp\" data-delay=\"300\">\n                    <form class=\"navbar-form\" role=\"search\">\n                        <div class=\"form-group\">\n                            <input type=\"text\" class=\"form-control\" id=\"username\" placeholder=\"ユーザ名\">\n                        </div>\n                        <div class=\"form-group\">\n                            <input type=\"email\" class=\"form-control\" id=\"email\" placeholder=\"メールアドレス\">\n                        </div>\n                        <div class=\"form-group\">\n                            <input type=\"password\" class=\"form-control\" id=\"pass\" placeholder=\"パスワード\">\n                        </div>\n                        <div class=\"form-group\">\n                            <button type=\"submit\" class=\"btn btn-default\">新規登録する</button>\n                        </div>\n                    </form>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>\n\n<!--<div class=\"large-12 columns\" ng-controller=\"RegisterCtrl\">-->\n    <!--<strong>ユーザー登録 (※全て必須項目)</strong>-->\n\n    <!--<label>表示名を入力してください。</label>-->\n    <!--<input type=\"text\" placeholder=\"例:のびすけ\" ng-model=\"user.userName\" required />-->\n    <!--&lt;!&ndash;<label>twitterのIDを入力して下さい。(@以下)</label>&ndash;&gt;-->\n    <!--&lt;!&ndash;<input type=\"text\" placeholder=\"例:n0bisuke\" ng-model=\"twitter\" required />&ndash;&gt;-->\n    <!--<label>メールアドレスを入力して下さい。(確認メールが届きます。)</label>-->\n    <!--<input type=\"text\" placeholder=\"例:hoge@hoge.com\" ng-model=\"user.email\" required />-->\n    <!--<label>パスワードを入力して下さい。</label>-->\n    <!--<input type=\"password\" placeholder=\"例:password\" ng-model=\"user.password\" required />-->\n    <!--<label>確認用でパスワードを再入力して下さい。</label>-->\n    <!--<input type=\"password\" placeholder=\"例:password\" ng-model=\"user.passwordCheck\" required />-->\n\n    <!--<p ng-if=\"(!user.userName||!user.email||!user.password)||user.password!==user.passwordCheck\">-->\n        <!--入力項目が不完全です。-->\n    <!--</p>-->\n    <!--<button ng-click=\"addUser()\" ng-if=\"(user.userName&&user.email&&user.password)&&user.password===user.passwordCheck\">-->\n        <!--新規ユーザー登録-->\n    <!--</button>-->\n\n    <!--<a href=\"#/login\" class=\"tiny secondary button\">ログインへ</a>-->\n<!--</div>-->";
 
 /***/ },
 /* 32 */
