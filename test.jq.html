@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!--<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>-->
+
+<script>
+
+    (function() {
+
+        // feed取得処理
+
+//        $.ajax({
+//            url: 'http://meigen.o-bit.biz/api'
+//        }).done(function(data){
+//            /*成功*/
+//            console.log(data);
+//        }).fail(function(data){
+//            /*失敗*/
+//        });
+
+//        $.ajax({
+//            type: "GET",
+//            url: 'http://meigen.o-bit.biz/api',
+//
+//            success: function(data){
+//                /**成功した場合の処理
+//                 console.log(data);
+//                 */
+//                console.log(data);
+//            },
+//            error: function(jqXHR,textStatus,errorThrown){
+//                /**エラーの場合の処理
+//                 console.log(jqXHR);
+//                 console.log(textStatus);
+//                 console.log(errorThrown);
+//                 */
+//            }
+//        });
+        $.getJSON('http://ajax.googleapis.com/ajax/services/feed/load?callback=?',
+                {
+                    q: 'http://api.aitc.jp/jmardb/reports/bf4f5df9-ba72-38eb-938c-5d29418bcac2;jsessionid=893E1AB0C88040F4DDFD2902C9CFFED8',
+                    v: '1.0',
+                    num: 20
+                },
+                function (data) {
+                    console.log(data);
+                }
+        );
+
+        //console.log("aaa");
+
+    })();
+//        $(function() {
+//            $('#bnr_area a img,.link_area a img').hover(
+//                    function(){
+//                        $(this).stop().animate({opacity:'0.5'},200);
+//                    },function(){
+//                        $(this).stop().animate({opacity:'1'},200);
+//                    });
+//        })
+//        $.ajax({
+//            url: 'http://meigen.o-bit.biz/api'
+//        }).done(function(data){
+//            /*成功*/
+//            console.log(data);
+//        }).fail(function(data){
+//            /*失敗*/
+//        });
+//    });
+</script>
+</body>
+</html>

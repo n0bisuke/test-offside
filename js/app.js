@@ -95,7 +95,9 @@
 		"./roleCtrl.js": 11,
 		"./roomCtrl.js": 12,
 		"./signinCtrl.js": 13,
-		"./standbyCtrl.js": 14
+		"./standbyCtrl.js": 14,
+		"./topCtrl.js": 15,
+		"./transactionCtrl.js": 16
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -128,13 +130,13 @@
 	'use strict'
 
 	angular.module('config').config(['$stateProvider','$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-	    $urlRouterProvider.otherwise('/login');
+	    $urlRouterProvider.otherwise('/');
 	    $stateProvider
-	//        .state("/",{
-	//            url:"/",
-	//            template: require('../views/intro.html'),
-	//            controller: "MainCtrl"
-	//        })
+	        .state("/",{
+	            url:"/",
+	            template: __webpack_require__(23),
+	            controller: "TopCtrl"
+	        })
 
 	        //ユーザー登録 1
 	        .state("/register",{
@@ -146,9 +148,17 @@
 	        //ユーザーログイン 2
 	        .state("/login",{
 	            url:"/login",
-	            template: __webpack_require__(23),
+	            template: __webpack_require__(32),
 	            controller: "LoginCtrl"
 	        })
+
+	        //決済
+	        .state("/transaction",{
+	            url:"/transaction",
+	            template: __webpack_require__(33),
+	            controller: "TransactionCtrl"
+	        })
+
 
 	        //ルーム作成 3
 	        .state("/room",{
@@ -190,13 +200,13 @@
 	            url:"/finish",
 	            template: __webpack_require__(30),
 	            controller: 'ReadyCtrl'
-	        })
-
-	        .state("/signin",{
-	            url:"/signin",
-	            template: __webpack_require__(32),
-	            controller: 'SigninCtrl'
 	        });
+
+	//        .state("/signin",{
+	//            url:"/signin",
+	//            template: require('../views/auth/signin.html'),
+	//            controller: 'SigninCtrl'
+	//        });
 	}]);
 
 /***/ },
@@ -272,7 +282,7 @@
 
 	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
 
-	__webpack_require__(15);
+	__webpack_require__(18);
 
 	angular.module('controllers').controller('FinishCtrl', [
 	    '$scope',
@@ -322,7 +332,7 @@
 	        };
 	    }
 	]);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ },
 /* 6 */
@@ -330,8 +340,8 @@
 
 	'use strict';
 
-	__webpack_require__(15);
-	__webpack_require__(16);
+	__webpack_require__(18);
+	__webpack_require__(19);
 
 	angular.module('controllers').controller('LoginCtrl', [
 	    '$scope',
@@ -388,8 +398,8 @@
 
 	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
 
-	__webpack_require__(15);
 	__webpack_require__(18);
+	__webpack_require__(20);
 
 	angular.module('controllers').controller('MainCtrl',[
 	    '$scope',
@@ -470,7 +480,7 @@
 
 	    }
 	]);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ },
 /* 8 */
@@ -478,7 +488,7 @@
 
 	'use strict';
 
-	__webpack_require__(15);
+	__webpack_require__(18);
 
 	angular.module('controllers').controller('PlayerCtrl', [
 	    '$scope',
@@ -593,7 +603,7 @@
 
 	'use strict';
 
-	__webpack_require__(15);
+	__webpack_require__(18);
 
 	angular.module('controllers').controller('ReadyCtrl', [
 	    '$scope',
@@ -690,9 +700,9 @@
 
 	'use strict';
 
-	__webpack_require__(16);
-	__webpack_require__(17);
 	__webpack_require__(19);
+	__webpack_require__(21);
+	__webpack_require__(22);
 
 	angular.module('controllers').controller('RegisterCtrl', [
 	    '$scope',
@@ -707,28 +717,28 @@
 	//            console.log(res);
 	//        });
 
-	        var headers = {
-	            'Access-Control-Allow-Origin' : '*',
-	            'Access-Control-Allow-Methods' : 'POST, GET, OPTIONS, PUT',
-	            'Content-Type': 'application/json',
-	            'Accept': 'application/json'
-	        };
-
-	        return $http({
-	            method: "GET",
-	            headers: headers,
-	            url: 'http://weather.livedoor.com/forecast/webservice/json/v1?city=400040',
-	            data: {"email":"my@email.com","password":"secret"}
-	        }).success(function(result) {
-	            console.log("Auth.signin.success!")
-	            console.log(result);
-	        }).error(function(data, status, headers, config) {
-	            console.log("Auth.signin.error!")
-	            console.log(data);
-	            console.log(status);
-	            console.log(headers);
-	            console.log(config);
-	        });
+	//        var headers = {
+	//            'Access-Control-Allow-Origin' : '*',
+	//            'Access-Control-Allow-Methods' : 'POST, GET, OPTIONS, PUT',
+	//            'Content-Type': 'application/json',
+	//            'Accept': 'application/json'
+	//        };
+	//
+	//        return $http({
+	//            method: "GET",
+	//            headers: headers,
+	//            url: 'http://weather.livedoor.com/forecast/webservice/json/v1?city=400040',
+	//            data: {"email":"my@email.com","password":"secret"}
+	//        }).success(function(result) {
+	//            console.log("Auth.signin.success!")
+	//            console.log(result);
+	//        }).error(function(data, status, headers, config) {
+	//            console.log("Auth.signin.error!")
+	//            console.log(data);
+	//            console.log(status);
+	//            console.log(headers);
+	//            console.log(config);
+	//        });
 
 	//        var um = new UserModel({hoge:"aaa"});
 	//        um.$get(function(){
@@ -782,7 +792,7 @@
 
 	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
 
-	__webpack_require__(15);
+	__webpack_require__(18);
 
 	angular.module('controllers').controller('RoleCtrl', [
 	    '$scope',
@@ -838,7 +848,7 @@
 	        });
 	    }
 	]);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ },
 /* 12 */
@@ -846,9 +856,9 @@
 
 	'use strict';
 
-	__webpack_require__(15);
-	__webpack_require__(16);
 	__webpack_require__(18);
+	__webpack_require__(19);
+	__webpack_require__(20);
 
 	angular.module('controllers').controller('RoomCtrl', [
 	    '$scope',
@@ -868,7 +878,7 @@
 
 	        //セレクトボックスの変更を監視
 	        $scope.$watch('num', function(){
-	            $scope.roomEx = __webpack_require__(20)($scope.num).mes;
+	            $scope.roomEx = __webpack_require__(17)($scope.num).mes;
 	        });
 	    }
 	]);
@@ -890,9 +900,9 @@
 
 	/* WEBPACK VAR INJECTION */(function(_) {'use strict';
 
-	__webpack_require__(15);
-	__webpack_require__(16);
 	__webpack_require__(18);
+	__webpack_require__(19);
+	__webpack_require__(20);
 
 	angular.module('controllers').controller('StandbyCtrl', [
 	    '$scope',
@@ -983,10 +993,72 @@
 	        });
 	    }
 	]);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ },
 /* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	angular.module('controllers').controller('TopCtrl', [
+	    function () {}
+	]);
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	angular.module('controllers').controller('TransactionCtrl', [
+	    function () {
+	    }
+	]);
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(num){
+	    var mes = '';
+	    var casting = [];
+
+	    if(num === 1){//でばっぐ用途
+	        casting = ['general'];
+	        mes = "村人";
+	    }else if(num === 2){//デバッグ用途
+	        casting = ['wizard', 'wolf'];
+	        mes = "占い師,人狼";
+	    }else if(num === 3){
+	        casting = ['general', 'wizard', 'wolf'];
+	        mes = "村人,占い師,人狼";
+	    }else if(num === 4){
+	        casting = ['general', 'fox', 'thief', 'wolf'];
+	        mes = "人狼,怪盗,妖狐,村人";
+	    }else if(num === 5){
+	        casting = ['general', 'wizard', 'thief', 'crazy', 'wolf'];
+	        mes = "村人,怪盗,占い師,人狼,狂人";
+	    }else if(num === 6){
+	        casting = ['general', 'general', 'wizard', 'thief', 'crazy', 'wolf'];
+	        mes = "村人(2),怪盗,占い師,人狼,狂人";
+	    }else if(num === 7){
+	        casting = ['general', 'general', 'wizard', 'thief', 'crazy', 'wolf', 'fox'];
+	        mes = "村人(2),怪盗,占い師,人狼,狂人,妖狐";
+	    }else if(num === 8){
+	        casting = ['general', 'general', 'general', 'wizard', 'thief', 'crazy', 'wolf', 'fox'];
+	        mes = "村人(3),怪盗,占い師,人狼,狂人,妖狐";
+	    }
+	    mes = "プレイヤーの役職内訳は"+mes+"です。";
+
+	    return {
+	        mes: mes,
+	        casting: casting
+	    };
+	};
+
+/***/ },
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1078,7 +1150,7 @@
 	]);
 
 /***/ },
-/* 16 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1161,12 +1233,75 @@
 	]);
 
 /***/ },
-/* 17 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(19);
+	angular.module('services').factory('RoomModel', [
+	    'storage',
+
+	    function (storage) {
+	        return {
+	            //部屋の初期化
+	            init: function(room_name, num){
+	                if(!num){
+	                    alert("人数を選択して下さい。");
+	                    return;
+	                }
+
+	                var config = __webpack_require__(17)(num);
+	                var init_data = __webpack_require__(35)(room_name, config.casting, config.mes);
+	                shuffle(init_data.current); //シャッフル
+	                jinroDS.set(room_name, init_data);
+
+	                console.log("初期化しました",config.mes,room_name,num, init_data);
+
+	                return config.mes;
+	            },
+
+	            //部屋情報を取得
+	            get: function(room_id, cb){
+	                jinroDS.child(room_id).get(function(data){
+	                    cb(data);
+	                });
+	            },
+
+	            set: function(){
+
+	            },
+
+	            getAll: function(){
+	                //jinroDataStore.child({}).get(function(data){
+	                //    return data;
+	                //});
+	            }
+
+	        };
+
+	    }
+	]);
+
+	//配列のシャッフル
+	function shuffle(a){
+	    var n = a.length;
+	    for(var i = n - 1; i > 0; i--) {
+	        var j = Math.floor(Math.random() * (i + 1));
+	        var tmp = a[i];
+	        a[i] = a[j];
+	        a[j] = tmp;
+	    }
+
+	    return a;
+	}
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	__webpack_require__(22);
 
 	angular.module('services').factory('AuthModel', [
 	    '$http',
@@ -1231,70 +1366,7 @@
 	]);
 
 /***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	angular.module('services').factory('RoomModel', [
-	    'storage',
-
-	    function (storage) {
-	        return {
-	            //部屋の初期化
-	            init: function(room_name, num){
-	                if(!num){
-	                    alert("人数を選択して下さい。");
-	                    return;
-	                }
-
-	                var config = __webpack_require__(20)(num);
-	                var init_data = __webpack_require__(22)(room_name, config.casting, config.mes);
-	                shuffle(init_data.current); //シャッフル
-	                jinroDS.set(room_name, init_data);
-
-	                console.log("初期化しました",config.mes,room_name,num, init_data);
-
-	                return config.mes;
-	            },
-
-	            //部屋情報を取得
-	            get: function(room_id, cb){
-	                jinroDS.child(room_id).get(function(data){
-	                    cb(data);
-	                });
-	            },
-
-	            set: function(){
-
-	            },
-
-	            getAll: function(){
-	                //jinroDataStore.child({}).get(function(data){
-	                //    return data;
-	                //});
-	            }
-
-	        };
-
-	    }
-	]);
-
-	//配列のシャッフル
-	function shuffle(a){
-	    var n = a.length;
-	    for(var i = n - 1; i > 0; i--) {
-	        var j = Math.floor(Math.random() * (i + 1));
-	        var tmp = a[i];
-	        a[i] = a[j];
-	        a[j] = tmp;
-	    }
-
-	    return a;
-	}
-
-/***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1341,48 +1413,73 @@
 
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = function(num){
-	    var mes = '';
-	    var casting = [];
-
-	    if(num === 1){//でばっぐ用途
-	        casting = ['general'];
-	        mes = "村人";
-	    }else if(num === 2){//デバッグ用途
-	        casting = ['wizard', 'wolf'];
-	        mes = "占い師,人狼";
-	    }else if(num === 3){
-	        casting = ['general', 'wizard', 'wolf'];
-	        mes = "村人,占い師,人狼";
-	    }else if(num === 4){
-	        casting = ['general', 'fox', 'thief', 'wolf'];
-	        mes = "人狼,怪盗,妖狐,村人";
-	    }else if(num === 5){
-	        casting = ['general', 'wizard', 'thief', 'crazy', 'wolf'];
-	        mes = "村人,怪盗,占い師,人狼,狂人";
-	    }else if(num === 6){
-	        casting = ['general', 'general', 'wizard', 'thief', 'crazy', 'wolf'];
-	        mes = "村人(2),怪盗,占い師,人狼,狂人";
-	    }else if(num === 7){
-	        casting = ['general', 'general', 'wizard', 'thief', 'crazy', 'wolf', 'fox'];
-	        mes = "村人(2),怪盗,占い師,人狼,狂人,妖狐";
-	    }else if(num === 8){
-	        casting = ['general', 'general', 'general', 'wizard', 'thief', 'crazy', 'wolf', 'fox'];
-	        mes = "村人(3),怪盗,占い師,人狼,狂人,妖狐";
-	    }
-	    mes = "プレイヤーの役職内訳は"+mes+"です。";
-
-	    return {
-	        mes: mes,
-	        casting: casting
-	    };
-	};
+	module.exports = "<section id=\"service\" class=\"page\">\n    <div class=\"container\">\n        <div class=\"content text-center\">\n            <div class=\"heading\">\n                <h2>OFFSIDENOWとは</h2>\n                <div class=\"border\"></div>\n                <br />\n            </div>\n            <div class=\"row\">\n                <div class=\"col-lg-4 service animated hiding\" data-animation=\"fadeInUp\" data-delay=\"300\">\n                    <i class=\"fa fa-futbol-o fa-5x\"></i>\n                    <h3><a href=\"#\">フットサル管理</a></h3>\n                    <p>OFFSIDENOWとは、フットサル専用の管理システムです。大会参加者管理や参加費用の事前徴収などを提供するツールです。</p>\n                </div>\n                <div class=\"col-lg-4 service animated hiding\" data-animation=\"fadeInUp\" data-delay=\"900\">\n                    <i class=\"fa fa-money fa-5x\"></i>\n                    <h3><a href=\"#\">カンタン決済</a></h3>\n                    <p>大会参加費を事前にカンタン決済。大会当日の支払いの手間をカットできます。</p>\n                </div>\n                <div class=\"col-lg-4 service animated hiding\" data-animation=\"fadeInUp\" data-delay=\"600\">\n                    <i class=\"fa fa-comments-o fa-5x\"></i>\n                    <h3><a href=\"#\">気軽に情報交換</a></h3>\n                    <p>フットサルメンバーと情報交換。練習日の日程調整やスキルの向上に役立ちます。</p>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>";
 
 /***/ },
-/* 21 */
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<div class=\"large-12 columns\" ng-controller=\"RoomCtrl\">\n    <!--1st step-->\n    <div ng-hide=\"enter\">\n        <strong>人狼部屋を作ります (※全て必須項目)</strong>\n        <label>部屋の表示名を入力してください。</label>\n        <input type=\"text\" placeholder=\"例:のびすけ部屋\" ng-model=\"roomName\" required />\n        <label>人数を選択して下さい。</label>\n\n        <div ng-init=\"num = 4\"></div>\n        <div ng-init=\"hoge = [1,2,3,4,5,6,7,8]\"></div>\n        <select ng-model=\"num\" ng-options=\"c for c in hoge\">\n        </select><br/>\n\n        <p>{{num}}人部屋を作ります。</p>\n        <p>{{roomEx}}</p>\n\n        <button class=\"laerge round button\" ng-click=\"create()\">\n            部屋を作る\n        </button>\n    </div>\n\n    <!--2nd step-->\n    <div ng-show=\"enter\">\n        <div class=\"callout panel\">\n            <p>部屋名: {{roomName}}</p>\n            <p>人数: {{num}}人</p>\n            <p>内訳: <strong>{{roomEx}}</strong></p>\n        </div>\n\n        <a href=\"#/standby/{{roomName}}\" class=\"laerge round button\">\n            {{roomName}}へ\n        </a>\n\n    </div>\n</div>";
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<div ng-controller=\"StandbyCtrl\">\n\n    <!--エラー時-->\n    <div ng-if=\"error === 'room_empty'\">\n        <p>{{room_name}}は存在しません。</p>\n        <a href=\"#/login\" class=\"laerge round button\">\n            戻る\n        </a>\n    </div>\n\n    <!--通常時-->\n    <div ng-show=\"roomEx\">\n        <!--部屋情報-->\n\n        <div>\n            <p>部屋名: {{room_name}}</p>\n            <p>人数: {{num}}人</p>\n            <p>{{roomEx}}</p>\n        </div>\n\n        <hr/>\n\n        <!--参加者-->\n        <div>\n            <!--ログインしていない場合-->\n            <div ng-if=\"error === 'not_login'\">\n                <p>ログインしていません。ログインして下さい。</p>\n                <a href=\"#/login\" class=\"large success button\">\n                    ログイン\n                </a>\n            </div>\n\n            <!--ログイン済み-->\n            <div ng-if=\"error !== 'not_login'\" ng-cloak>\n                <p>\"{{userName}}\"でログイン済です。\n                <img src=\"{{twitterImg}}\" alt=\"twitter画像\"/>\n                </p>\n                <button ng-click=\"userInit()\" ng-hide=\"init\">入室する</button>\n            </div>\n\n            <div class=\"callout panel\">\n                <p>参加者が{{num}}人になったら開始します。</p>\n                <p>現在の参加者は<strong>{{friends.length}}</strong>名です。</p>\n                <p class=\"secondary round label\" ng-repeat=\"friend in friends\" >{{friend}}</p>\n            </div>\n            <a href=\"#/role\" class=\"laerge success button\" ng-show=\"enter\">ゲームスタート</a>\n\n        </div>\n    </div>\n\n\n\n\n</div>";
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<div class=\"large-12 columns\" ng-controller=\"PlayerCtrl\">\n\n    <div ng-hide=\"init\">\n        <label>プレイヤー名を入力してください。</label>\n        <input type=\"text\" placeholder=\"例:のびすけ\" ng-model=\"userName\" required>\n    </div>\n\n    <!--ユーザー名入力後-->\n    <div class=\"callout panel\" ng-show=\"userName\">\n        <p>ユーザー名は{{userName}}になります。</p>\n        <button ng-click=\"userInit()\" ng-hide=\"init\">確定</button>\n    </div>\n\n    <ul>\n        <li ng-repeat=\"friend in member\">{{friend}}</li>\n    </ul>\n\n</div>";
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<div class=\"large-12 columns\" ng-controller=\"RoleCtrl\">\n\n    <!--ユーザー名入力後-->\n    <div class=\"callout panel\">\n        <p>{{userName}}さんの役職は...\n            <strong>{{role}}</strong>\n            です。\n        </p>\n    </div>\n\n    <div ng-hide=\"role\">\n        <button class=\"laerge round button\" ng-click=\"getRole()\" ng-show=\"userName\">\n            役職を決める\n        </button>\n    </div>\n\n    <!--配役後-->\n    <div class=\"panel\" ng-show=\"role\">\n        <h3>役職解説</h3>\n        <p>{{ex}}</p>\n    </div>\n\n    <a href=\"#/ready\" class=\"laerge round button\" ng-show=\"enter\">\n        ゲームを始める\n    </a>\n\n    <hr>\n    <p>{{num}}人の役職が決まるまでお待ちください。</p>\n    <p class=\"secondary round label\" ng-repeat=\"friend in friends\" >{{friend.name}}さんの役職が決まりました。</p>\n\n</div>\n\n";
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<div class=\"large-12 columns\" ng-controller=\"ReadyCtrl\">\n    <div>\n        <div class=\"callout panel\">\n            <p>夜が来ました。役職毎にアクションをしてください。</p>\n        </div>\n\n        <div class=\"panel\">\n            <h3>役職解説: <strong>{{role}}</strong>{{userName}}</h3>\n            <p>{{ex}}</p>\n        </div>\n\n        <div ng-show=\"actionBtn\">\n\n            <div ng-if=\"type === 'thief'\">\n                交換する相手を選んでください。\n                <hr/>\n                <span ng-repeat=\"friend in friends\" ng-hide=\"message\">\n                    <button class=\"laerge round button\" ng-if=\"friend.name !== userName\" ng-click=\"getRole($index)\">{{friend.name}}</button>\n                </span>\n\n                <hr/>\n                <p>{{message}}</p>\n            </div>\n\n            <div ng-if=\"type === 'general'\">特にアクションはありません。</div>\n            <div ng-if=\"type === 'fox'\">特にアクションはありません。</div>\n\n            <div ng-if=\"type === 'wizard'\">\n                見る相手を選んでください。\n                <hr/>\n                <span ng-repeat=\"friend in friends\" ng-click=\"getRole($index)\" ng-hide=\"message\">\n                    <button class=\"laerge round button\" ng-if=\"friend.name !== userName\">{{friend.name}}</button>\n                </span>\n                <hr/>\n                <p>{{message}}</p>\n            </div>\n\n            <div ng-if=\"type === 'crazy'\">\n                人狼は{{partner}}さんです。\n            </div>\n\n            <div ng-if=\"type === 'wolf'\">\n                <p ng-if=\"partner !== 'none'\">狂人は{{partner}}さんです。</p>\n                <p ng-if=\"partner === 'none'\">このゲームでは狂人はいません。</p>\n            </div>\n\n        </div>\n\n        <br/>\n\n        <button class=\"laerge success button\" ng-hide=\"actionBtn\" ng-click=\"action()\">\n            アクションを起こす。\n        </button>\n\n        <button class=\"laerge alert button\" ng-if=\"actionBtn === 1\" ng-click=\"finishAction()\" ng-hide=\"btnHide\">\n            アクションを完了する。\n        </button>\n\n        <p ng-show=\"btnHide\">全員のアクションが完了するまで少々お待ちください。</p>\n\n        <a href=\"#/discuss\" class=\"laerge alert button\" ng-show=\"enter\">\n            ディスカッションへ\n        </a>\n\n    </div>\n\n</div>\n\n";
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<div class=\"large-12 columns\" ng-controller=\"DiscussCtrl\">\n\n    <div class=\"callout panel\">\n        <strong>ディスカッションをしてください。</strong>\n    </div>\n\n    <div class=\"panel\">\n        <p>{{num}}人ゲームで、</p>\n        <p>{{roomEx}}</p>\n    </div>\n\n    <div ng-show=\"enter\" ng-hide=\"voted\">\n        <select ng-model=\"target\" ng-options=\"c for c in friends\">\n        </select>\n        <br/>\n        <button ng-click=\"vote()\">{{target}}の処刑に投票する</button>\n    </div>\n\n    <div ng-show=\"voted\" ng-cloak>\n        <p>{{target}}に投票しました。</p>\n        <p>全員の投票が終わるまでお待ち下さい。</p>\n    </div>\n\n    <hr/>\n\n    <a href=\"#/finish\" class=\"laerge alert button\" ng-show=\"finish\">\n        結果へ。。。\n    </a>\n\n</div>\n\n";
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<div class=\"large-12 columns\" ng-controller=\"FinishCtrl\">\n\n    <!--1st step Open Vote-->\n    <button ng-click=\"voteResult()\" ng-hide=\"vote\">投票結果</button>\n    <ul ng-show=\"vote\">\n        <li ng-repeat=\"(key,item) in vote\" >{{key}}の投票数は{{item}}です。</li>\n    </ul>\n\n    <hr/>\n\n    <!--2nd step Open Result-->\n    <button ng-click=\"finish()\" ng-show=\"vote\" ng-hide=\"open\">答えあわせ</button>\n    <ul ng-show=\"open\">\n        <li ng-repeat=\"friend in friends\" >{{friend.name}} : {{friend.role}}</li>\n    </ul>\n\n    <button class=\"laerge success button\" ng-show=\"open\" ng-click=\"cloase()\">topにもどる</button>\n\n</div>";
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<section id=\"login\" class=\"page\" ng-controller=\"RegisterCtrl\">\n    <div class=\"container\">\n        <div class=\"content text-center\">\n            <div class=\"heading\">\n                <span>ご利用頂くには、新規登録をしてください。</span>\n            </div>\n            <div class=\"row\">\n                <div class=\"col-lg-4 service animated hiding\" data-animation=\"fadeInUp\" data-delay=\"300\">\n                    <form class=\"navbar-form\" role=\"search\">\n                        <div class=\"form-group\">\n                            <input type=\"text\" class=\"form-control\" id=\"username\" placeholder=\"ユーザ名\">\n                        </div>\n                        <div class=\"form-group\">\n                            <input type=\"email\" class=\"form-control\" id=\"email\" placeholder=\"メールアドレス\">\n                        </div>\n                        <div class=\"form-group\">\n                            <input type=\"password\" class=\"form-control\" id=\"pass\" placeholder=\"パスワード\">\n                        </div>\n                        <div class=\"form-group\">\n                            <button type=\"submit\" class=\"btn btn-default\">新規登録する</button>\n                        </div>\n                    </form>\n                </div>\n            </div>\n        </div>\n    </div>\n</section>\n\n<!--<div class=\"large-12 columns\" ng-controller=\"RegisterCtrl\">-->\n    <!--<strong>ユーザー登録 (※全て必須項目)</strong>-->\n\n    <!--<label>表示名を入力してください。</label>-->\n    <!--<input type=\"text\" placeholder=\"例:のびすけ\" ng-model=\"user.userName\" required />-->\n    <!--&lt;!&ndash;<label>twitterのIDを入力して下さい。(@以下)</label>&ndash;&gt;-->\n    <!--&lt;!&ndash;<input type=\"text\" placeholder=\"例:n0bisuke\" ng-model=\"twitter\" required />&ndash;&gt;-->\n    <!--<label>メールアドレスを入力して下さい。(確認メールが届きます。)</label>-->\n    <!--<input type=\"text\" placeholder=\"例:hoge@hoge.com\" ng-model=\"user.email\" required />-->\n    <!--<label>パスワードを入力して下さい。</label>-->\n    <!--<input type=\"password\" placeholder=\"例:password\" ng-model=\"user.password\" required />-->\n    <!--<label>確認用でパスワードを再入力して下さい。</label>-->\n    <!--<input type=\"password\" placeholder=\"例:password\" ng-model=\"user.passwordCheck\" required />-->\n\n    <!--<p ng-if=\"(!user.userName||!user.email||!user.password)||user.password!==user.passwordCheck\">-->\n        <!--入力項目が不完全です。-->\n    <!--</p>-->\n    <!--<button ng-click=\"addUser()\" ng-if=\"(user.userName&&user.email&&user.password)&&user.password===user.passwordCheck\">-->\n        <!--新規ユーザー登録-->\n    <!--</button>-->\n\n    <!--<a href=\"#/login\" class=\"tiny secondary button\">ログインへ</a>-->\n<!--</div>-->";
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<section id=\"login\" class=\"page\" ng-controller=\"LoginCtrl\">\n    <div class=\"container\">\n        <div class=\"content text-center\">\n\n            <div class=\"heading\">\n                <span>ご利用頂くには、ログインをしてください。</span>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"col-lg-4 service animated hiding\" data-animation=\"fadeInUp\" data-delay=\"300\">\n                    <form class=\"navbar-form\" role=\"search\">\n                        <div class=\"form-group\">\n                            <input type=\"email\" class=\"form-control\" id=\"email\" placeholder=\"メールアドレス\">\n                        </div>\n                        <div class=\"form-group\">\n                            <input type=\"password\" class=\"form-control\" id=\"pass\" placeholder=\"パスワード\">\n                        </div>\n                        <div class=\"form-group\">\n                            <button type=\"submit\" class=\"btn btn-default\">ログインする</button>\n                        </div>\n                    </form>\n                </div>\n            </div>\n\n        </div>\n    </div>\n</section>";
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "<section id=\"top\" class=\"page\" ng-controller=\"TransactionCtrl\">\n    <div class=\"container\">\n        <div class=\"content text-center\">\n            <div class=\"heading\">\n                <a href=\"\"><button type=\"submit\" class=\"btn btn-default\">決済する</button></a>\n            </div>\n        </div>\n    </div>\n</section>";
+
+/***/ },
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.7.0
@@ -2803,7 +2900,7 @@
 
 
 /***/ },
-/* 22 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(room_name, casting, roomEx){
@@ -2861,66 +2958,6 @@
 	      created: ''
 	  };
 	};
-
-/***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "<div class=\"large-12 columns\" ng-controller=\"LoginCtrl\">\n\n    <!--ログイン前-->\n    <div ng-hide=\"setLogin\" ng-cloak>\n        <strong>人狼ゲーム: ログイン</strong>\n\n        <label>メールアドレスを入力して下さい。</label>\n        <input type=\"text\" placeholder=\"例:hoge@hoge.com\" ng-model=\"email\" required />\n        <label>パスワードを入力して下さい。</label>\n        <input type=\"password\" placeholder=\"例:password\" ng-model=\"password\" required />\n\n        <p ng-if=\"!email||!password\">\n            入力項目が不完全です。\n        </p>\n        <button ng-click=\"loginUser()\" ng-if=\"email&&password\">\n            ログイン\n        </button>\n\n        <hr>\n        <p>登録がまだの方は...</p>\n        <a href=\"#/register\" class=\"laerge success button\">新規登録</a>\n\n    </div>\n\n    <!--ログイン後-->\n    <div ng-show=\"setLogin\" ng-cloak>\n        <strong>ログイン中です。</strong>\n        <p>こんにちは、{{userName}}さん</p>\n        <img src=\"//www.paper-glasses.com/api/twipi/{{twitter}}\" alt=\"twitter画像\"/>\n        <hr>\n        <a href=\"#/room\" class=\"large success button\">\n            部屋作成\n        </a>\n\n        <button ng-click=\"findRoom()\" class=\"large success button\">\n            部屋を探す\n        </button>\n\n        <ul ng-show=\"roomList\" ng-show=\"roomList[0]\">\n            <li ng-repeat=\"room in roomList\" ><a href=\"#/standby/{{room.room_id}}\">{{room.room_id}}</a></li>\n        </ul>\n        <p ng-show=\"roomList && !roomList[0]\">登録されている部屋がありません。</p>\n\n        <hr>\n        <br/>\n\n        <button ng-click=\"logoutUser()\" class=\"small alert button\">\n            ログアウト\n        </button>\n    </div>\n</div>";
-
-/***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "<div class=\"large-12 columns\" ng-controller=\"RoomCtrl\">\n    <!--1st step-->\n    <div ng-hide=\"enter\">\n        <strong>人狼部屋を作ります (※全て必須項目)</strong>\n        <label>部屋の表示名を入力してください。</label>\n        <input type=\"text\" placeholder=\"例:のびすけ部屋\" ng-model=\"roomName\" required />\n        <label>人数を選択して下さい。</label>\n\n        <div ng-init=\"num = 4\"></div>\n        <div ng-init=\"hoge = [1,2,3,4,5,6,7,8]\"></div>\n        <select ng-model=\"num\" ng-options=\"c for c in hoge\">\n        </select><br/>\n\n        <p>{{num}}人部屋を作ります。</p>\n        <p>{{roomEx}}</p>\n\n        <button class=\"laerge round button\" ng-click=\"create()\">\n            部屋を作る\n        </button>\n    </div>\n\n    <!--2nd step-->\n    <div ng-show=\"enter\">\n        <div class=\"callout panel\">\n            <p>部屋名: {{roomName}}</p>\n            <p>人数: {{num}}人</p>\n            <p>内訳: <strong>{{roomEx}}</strong></p>\n        </div>\n\n        <a href=\"#/standby/{{roomName}}\" class=\"laerge round button\">\n            {{roomName}}へ\n        </a>\n\n    </div>\n</div>";
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "<div ng-controller=\"StandbyCtrl\">\n\n    <!--エラー時-->\n    <div ng-if=\"error === 'room_empty'\">\n        <p>{{room_name}}は存在しません。</p>\n        <a href=\"#/login\" class=\"laerge round button\">\n            戻る\n        </a>\n    </div>\n\n    <!--通常時-->\n    <div ng-show=\"roomEx\">\n        <!--部屋情報-->\n\n        <div>\n            <p>部屋名: {{room_name}}</p>\n            <p>人数: {{num}}人</p>\n            <p>{{roomEx}}</p>\n        </div>\n\n        <hr/>\n\n        <!--参加者-->\n        <div>\n            <!--ログインしていない場合-->\n            <div ng-if=\"error === 'not_login'\">\n                <p>ログインしていません。ログインして下さい。</p>\n                <a href=\"#/login\" class=\"large success button\">\n                    ログイン\n                </a>\n            </div>\n\n            <!--ログイン済み-->\n            <div ng-if=\"error !== 'not_login'\" ng-cloak>\n                <p>\"{{userName}}\"でログイン済です。\n                <img src=\"{{twitterImg}}\" alt=\"twitter画像\"/>\n                </p>\n                <button ng-click=\"userInit()\" ng-hide=\"init\">入室する</button>\n            </div>\n\n            <div class=\"callout panel\">\n                <p>参加者が{{num}}人になったら開始します。</p>\n                <p>現在の参加者は<strong>{{friends.length}}</strong>名です。</p>\n                <p class=\"secondary round label\" ng-repeat=\"friend in friends\" >{{friend}}</p>\n            </div>\n            <a href=\"#/role\" class=\"laerge success button\" ng-show=\"enter\">ゲームスタート</a>\n\n        </div>\n    </div>\n\n\n\n\n</div>";
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "<div class=\"large-12 columns\" ng-controller=\"PlayerCtrl\">\n\n    <div ng-hide=\"init\">\n        <label>プレイヤー名を入力してください。</label>\n        <input type=\"text\" placeholder=\"例:のびすけ\" ng-model=\"userName\" required>\n    </div>\n\n    <!--ユーザー名入力後-->\n    <div class=\"callout panel\" ng-show=\"userName\">\n        <p>ユーザー名は{{userName}}になります。</p>\n        <button ng-click=\"userInit()\" ng-hide=\"init\">確定</button>\n    </div>\n\n    <ul>\n        <li ng-repeat=\"friend in member\">{{friend}}</li>\n    </ul>\n\n</div>";
-
-/***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "<div class=\"large-12 columns\" ng-controller=\"RoleCtrl\">\n\n    <!--ユーザー名入力後-->\n    <div class=\"callout panel\">\n        <p>{{userName}}さんの役職は...\n            <strong>{{role}}</strong>\n            です。\n        </p>\n    </div>\n\n    <div ng-hide=\"role\">\n        <button class=\"laerge round button\" ng-click=\"getRole()\" ng-show=\"userName\">\n            役職を決める\n        </button>\n    </div>\n\n    <!--配役後-->\n    <div class=\"panel\" ng-show=\"role\">\n        <h3>役職解説</h3>\n        <p>{{ex}}</p>\n    </div>\n\n    <a href=\"#/ready\" class=\"laerge round button\" ng-show=\"enter\">\n        ゲームを始める\n    </a>\n\n    <hr>\n    <p>{{num}}人の役職が決まるまでお待ちください。</p>\n    <p class=\"secondary round label\" ng-repeat=\"friend in friends\" >{{friend.name}}さんの役職が決まりました。</p>\n\n</div>\n\n";
-
-/***/ },
-/* 28 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "<div class=\"large-12 columns\" ng-controller=\"ReadyCtrl\">\n    <div>\n        <div class=\"callout panel\">\n            <p>夜が来ました。役職毎にアクションをしてください。</p>\n        </div>\n\n        <div class=\"panel\">\n            <h3>役職解説: <strong>{{role}}</strong>{{userName}}</h3>\n            <p>{{ex}}</p>\n        </div>\n\n        <div ng-show=\"actionBtn\">\n\n            <div ng-if=\"type === 'thief'\">\n                交換する相手を選んでください。\n                <hr/>\n                <span ng-repeat=\"friend in friends\" ng-hide=\"message\">\n                    <button class=\"laerge round button\" ng-if=\"friend.name !== userName\" ng-click=\"getRole($index)\">{{friend.name}}</button>\n                </span>\n\n                <hr/>\n                <p>{{message}}</p>\n            </div>\n\n            <div ng-if=\"type === 'general'\">特にアクションはありません。</div>\n            <div ng-if=\"type === 'fox'\">特にアクションはありません。</div>\n\n            <div ng-if=\"type === 'wizard'\">\n                見る相手を選んでください。\n                <hr/>\n                <span ng-repeat=\"friend in friends\" ng-click=\"getRole($index)\" ng-hide=\"message\">\n                    <button class=\"laerge round button\" ng-if=\"friend.name !== userName\">{{friend.name}}</button>\n                </span>\n                <hr/>\n                <p>{{message}}</p>\n            </div>\n\n            <div ng-if=\"type === 'crazy'\">\n                人狼は{{partner}}さんです。\n            </div>\n\n            <div ng-if=\"type === 'wolf'\">\n                <p ng-if=\"partner !== 'none'\">狂人は{{partner}}さんです。</p>\n                <p ng-if=\"partner === 'none'\">このゲームでは狂人はいません。</p>\n            </div>\n\n        </div>\n\n        <br/>\n\n        <button class=\"laerge success button\" ng-hide=\"actionBtn\" ng-click=\"action()\">\n            アクションを起こす。\n        </button>\n\n        <button class=\"laerge alert button\" ng-if=\"actionBtn === 1\" ng-click=\"finishAction()\" ng-hide=\"btnHide\">\n            アクションを完了する。\n        </button>\n\n        <p ng-show=\"btnHide\">全員のアクションが完了するまで少々お待ちください。</p>\n\n        <a href=\"#/discuss\" class=\"laerge alert button\" ng-show=\"enter\">\n            ディスカッションへ\n        </a>\n\n    </div>\n\n</div>\n\n";
-
-/***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "<div class=\"large-12 columns\" ng-controller=\"DiscussCtrl\">\n\n    <div class=\"callout panel\">\n        <strong>ディスカッションをしてください。</strong>\n    </div>\n\n    <div class=\"panel\">\n        <p>{{num}}人ゲームで、</p>\n        <p>{{roomEx}}</p>\n    </div>\n\n    <div ng-show=\"enter\" ng-hide=\"voted\">\n        <select ng-model=\"target\" ng-options=\"c for c in friends\">\n        </select>\n        <br/>\n        <button ng-click=\"vote()\">{{target}}の処刑に投票する</button>\n    </div>\n\n    <div ng-show=\"voted\" ng-cloak>\n        <p>{{target}}に投票しました。</p>\n        <p>全員の投票が終わるまでお待ち下さい。</p>\n    </div>\n\n    <hr/>\n\n    <a href=\"#/finish\" class=\"laerge alert button\" ng-show=\"finish\">\n        結果へ。。。\n    </a>\n\n</div>\n\n";
-
-/***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "<div class=\"large-12 columns\" ng-controller=\"FinishCtrl\">\n\n    <!--1st step Open Vote-->\n    <button ng-click=\"voteResult()\" ng-hide=\"vote\">投票結果</button>\n    <ul ng-show=\"vote\">\n        <li ng-repeat=\"(key,item) in vote\" >{{key}}の投票数は{{item}}です。</li>\n    </ul>\n\n    <hr/>\n\n    <!--2nd step Open Result-->\n    <button ng-click=\"finish()\" ng-show=\"vote\" ng-hide=\"open\">答えあわせ</button>\n    <ul ng-show=\"open\">\n        <li ng-repeat=\"friend in friends\" >{{friend.name}} : {{friend.role}}</li>\n    </ul>\n\n    <button class=\"laerge success button\" ng-show=\"open\" ng-click=\"cloase()\">topにもどる</button>\n\n</div>";
-
-/***/ },
-/* 31 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "<div class=\"large-12 columns\" ng-controller=\"RegisterCtrl\">\n    <strong>ユーザー登録 (※全て必須項目)</strong>\n\n    <label>表示名を入力してください。</label>\n    <input type=\"text\" placeholder=\"例:のびすけ\" ng-model=\"user.userName\" required />\n    <!--<label>twitterのIDを入力して下さい。(@以下)</label>-->\n    <!--<input type=\"text\" placeholder=\"例:n0bisuke\" ng-model=\"twitter\" required />-->\n    <label>メールアドレスを入力して下さい。(確認メールが届きます。)</label>\n    <input type=\"text\" placeholder=\"例:hoge@hoge.com\" ng-model=\"user.email\" required />\n    <label>パスワードを入力して下さい。</label>\n    <input type=\"password\" placeholder=\"例:password\" ng-model=\"user.password\" required />\n    <label>確認用でパスワードを再入力して下さい。</label>\n    <input type=\"password\" placeholder=\"例:password\" ng-model=\"user.passwordCheck\" required />\n\n    <p ng-if=\"(!user.userName||!user.email||!user.password)||user.password!==user.passwordCheck\">\n        入力項目が不完全です。\n    </p>\n    <button ng-click=\"addUser()\" ng-if=\"(user.userName&&user.email&&user.password)&&user.password===user.passwordCheck\">\n        新規ユーザー登録\n    </button>\n\n    <a href=\"#/login\" class=\"tiny secondary button\">ログインへ</a>\n</div>";
-
-/***/ },
-/* 32 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "<div ng-controller=\"SigninCtrl\">\n    <input type=\"text\"/>\n    <button ng-click=\"auth()\">そうしんsss</button>\n    ほげほげほげ<br />\n    あああああああ<br />\n    ほげほげ<br />\n    ほげほげ\n</div>";
 
 /***/ }
 /******/ ])
