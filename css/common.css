@@ -1,0 +1,47 @@
+header nav {
+  font-family: "boku", "メイリオ", Meiryo; }
+
+/* @font-face kit by Fonts2u (http://www.fonts2u.com) */
+@font-face {
+  font-family: "boku";
+  src: url("../fonts/boku/bokutachi.otf") format("otf"), url("../fonts/boku/bokutachi.ttf") format("truetype"), url("../fonts/boku/bokutachi.svg") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+/*
+SCSS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: $icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+$icon-home: x y offset_x offset_y width height total_width total_height image_path;
+*/
+/*
+The provided mixins are intended to be used with the array-like variables
+
+.icon-home {
+  @include sprite-width($icon-home);
+}
+
+.icon-email {
+  @include sprite($icon-email);
+}
+*/
+header {
+  width: 100%; }
+  header img {
+    width: 100px; }
+  header nav li {
+    margin: 10px 0px 10px 0px;
+    list-style-type: none; }
+
+html, body {
+  margin: 0; }
+
+#wrapper {
+  width: 90%;
+  height: 100%;
+  margin: 0px auto; }
+

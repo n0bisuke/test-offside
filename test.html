@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title>AngularJS $http</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.js"></script>
+</head>
+<body>
+
+<h2>ng-repeat $http</h2>
+
+<div ng-controller="MainCtrl">
+    <ul ng-repeat="member in members">
+        <li>{{member.name}}</li>
+    </ul>
+</div>
+
+<script>
+    var app = angular.module('myApp', []);
+
+    app.controller('MainCtrl', function($scope, $http) {
+        $http({ method: 'GET', url: 'http://weather.livedoor.com/forecast/webservice/json/v1?city=400040' })
+                .success(function(members, status, headers, config) {
+//                    $scope.members = members;
+
+                    console.log(members);
+                })
+                .error(function() {
+                    // エラー処理
+                });
+    });
+</script>
+
+</body>
+</html>
